@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: agri-info-hub
+    runtime: docker
+    plan: free
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: H2_CONSOLE_ENABLED
+        value: "false"
+      - key: THYMELEAF_CACHE
+        value: "true"
