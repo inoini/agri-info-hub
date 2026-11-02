@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="全国47都道府県の農業後継者・担い手・経営継承・新規就農の相談窓口を県別に検索。農林水産省掲載の公的窓口へ案内します。">
+  <title>全国47都道府県の農業後継者・担い手相談窓口 | 農業情報ハブ</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .directory-hero{padding:44px 0 28px}
+    .directory-hero h1{font-size:clamp(28px,4vw,43px);margin:8px 0 14px}
+    .directory-lead{color:var(--muted);max-width:850px}
+    .directory-back{color:var(--green-700);font-weight:700;text-decoration:none}
+    .directory-filters{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:13px;margin:22px 0}
+    .directory-field{display:grid;gap:5px;color:var(--green-900);font-weight:700;font-size:14px}
+    .directory-field input,.directory-field select{width:100%;min-height:46px;border:1px solid #bccfbe;border-radius:10px;padding:10px;font:inherit;background:white;color:var(--text)}
+    .directory-stats{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 20px;font-size:14px}
+    .directory-stats button{border:1px solid var(--border);border-radius:9px;padding:8px 12px;background:white;color:var(--green-900);cursor:pointer}
+    .directory-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .directory-card{padding:18px;border:1px solid var(--border);border-radius:15px;background:#fbfcfa}
+    .directory-card h3{margin:2px 0 8px;color:var(--green-900);font-size:19px}
+    .directory-card .area{font-size:12px;color:var(--green-700);font-weight:700}
+    .directory-card .office{min-height:2.8em;margin:0 0 12px;font-size:13px;color:var(--muted)}
+    .directory-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .directory-actions a{display:inline-block;padding:9px 12px;border-radius:9px;font-weight:700;text-decoration:none;font-size:13px}
+    .directory-actions .official{background:var(--green-700);color:white}
+    .directory-actions .phone{background:#eaf4ed;color:var(--green-900)}
+    .directory-warning{padding:15px 17px;border-left:4px solid #bb9c35;border-radius:8px;background:#fff9e5;color:#5c5226;font-size:13px}
+    .guide-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+    .guide-links a{display:block;padding:16px;border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--green-900);background:#f7faf7;font-size:14px;font-weight:700}
+    .guide-links a span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}
+    .directory-footer{justify-content:center}
+    @media(max-width:750px){.directory-filters{grid-template-columns:1fr}.directory-cards,.guide-links{grid-template-columns:1fr}.directory-hero{padding-top:30px}.directory-card .office{min-height:0}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="農業情報ハブへ戻る">
+    <span class="brand-mark" aria-hidden="true">🌾</span><span><strong>農業情報ハブ</strong><small>Agri Information Hub</small></span>
+  </a>
+  <a class="directory-back" href="/">← トップへ戻る</a>
+</header>
+<main>
+  <section class="directory-hero">
+    <p class="eyebrow">SUCCESSION &amp; FARMING SUPPORT</p>
+    <h1>全国47都道府県の<br>農業後継者・担い手相談窓口</h1>
+    <p class="directory-lead">第三者への経営継承、農業後継者探し、新規就農、農地や農機具の引継ぎなどを相談できる公的窓口を、都道府県から探せます。実際の募集案件があるかは各窓口へお問い合わせください。</p>
+  </section>
+  <section class="content-section" aria-labelledby="search-title">
+    <div class="section-heading"><div><p class="eyebrow">SEARCH PREFECTURES</p><h2 id="search-title">都道府県から探す</h2></div><span>47都道府県対応</span></div>
+    <div class="directory-warning"><strong>掲載情報について：</strong>ここに掲載しているのは、就農・農業参入・経営継承などの相談先です。「現在、後継者を募集中の農家47件」という意味ではありません。相談内容や受付状況は各機関でご確認ください。</div>
+    <div class="directory-filters">
+      <label class="directory-field">県名・窓口名を検索<input type="search" id="keyword" placeholder="例：千葉、経営継承、農業公社" autocomplete="off"></label>
+      <label class="directory-field">地方を選択<select id="area"><option value="">すべての地方</option></select></label>
+      <label class="directory-field">都道府県を選択<select id="prefecture"><option value="">すべての都道府県</option></select></label>
+    </div>
+    <div class="directory-stats"><span id="result-count" role="status" aria-live="polite">47件の窓口を表示中</span><button type="button" id="reset">絞り込みを解除</button></div>
+    <div id="directory-cards" class="directory-cards" aria-label="都道府県別の相談窓口"></div>
+    <p id="no-results" hidden>該当する窓口がありません。検索条件を変更してください。</p>
+  </section>
+  <section class="content-section" aria-labelledby="guides-title">
+    <div class="section-heading"><div><p class="eyebrow">OFFICIAL GUIDES</p><h2 id="guides-title">経営継承・農地探しの公式情報</h2></div></div>
+    <p>募集案件の有無や条件は自治体によって異なります。農地と農機具・経営の引継ぎを希望する場合は、県の窓口に「第三者経営継承の受け手を募集している農家があるか」とご相談ください。</p>
+    <div class="guide-links">
+      <a href="https://www.maff.go.jp/j/keiei/keieikeisyo.html" target="_blank" rel="noopener noreferrer">農林水産省｜経営継承<span>第三者継承の考え方・相談先</span></a>
+      <a href="https://www.maff.go.jp/j/keiei/koukai/kikou/nouchibank.html" target="_blank" rel="noopener noreferrer">農林水産省｜農地バンク<span>都道府県ごとの農地中間管理機構一覧</span></a>
+      <a href="https://www.be-farmer.jp/consult/session/pref/" target="_blank" rel="noopener noreferrer">農業をはじめる.JP<span>全国の新規就農相談窓口</span></a>
+    </div>
+    <p style="margin-top:20px;font-size:12px;color:var(--muted)">出典：<a href="https://sannyu-portal.maff.go.jp/supportdesk/prefectures/" target="_blank" rel="noopener noreferrer">農林水産省 農業参入ポータル「47都道府県の窓口一覧」</a>。公式窓口の名称・連絡先は変更される場合があります。掲載は2026年11月時点の確認情報です。</p>
+  </section>
+</main>
+<footer class="directory-footer"><p>© 2026 農業情報ハブ | 掲載サイトは各運営者の公式ページでご確認ください。</p></footer>
+<script>
+"use strict";
+// Farm succession / entry consultation contacts. Verified against MAFF's prefecture directory.
+// These are consultation links, NOT verified active job or succession listings.
+const contacts = [["北海道","北海道・東北","北海道庁 農業経営・企業連携サポート室","011-206-7364","https://www.pref.hokkaido.lg.jp/ns/kei/142039.html"],["青森県","北海道・東北","青森県庁 構造政策課（あおもり農業支援）","017-734-9462","https://www.nounavi-aomori.jp/start"],["岩手県","北海道・東北","岩手県庁 農業振興課","019-629-5642","https://www.pref.iwate.jp/agri/i-agri/2004700/2004714.html"],["宮城県","北海道・東北","宮城県の就農支援窓口","022-211-2833","https://miyagi-syunoshien.com/"],["秋田県","北海道・東北","秋田県農業公社","018-893-6212","https://www.ak-agri.or.jp/soudan-menu/p119"],["山形県","北海道・東北","山形県農業会議","023-622-8716","https://www.yca.or.jp/"],["福島県","北海道・東北","福島県農業経営・就農支援センター","024-521-8676","https://start-fukuagri.jp/"],["茨城県","関東","茨城県農業経営課・茨城就農コンシェル","029-301-3846","https://www.ibanourin.or.jp/concier/"],["栃木県","関東","栃木県庁 経営技術課","028-623-2317","https://www.pref.tochigi.lg.jp/g04/index.html"],["群馬県","関東","群馬県庁 農業構造政策課・農業会議","027-226-3019","https://www.gnkaigi.jp/"],["埼玉県","関東","埼玉県庁 農業支援課","048-830-4052","https://www.pref.saitama.lg.jp/a0903/kigyousannyuu/index.html"],["千葉県","関東","千葉県農業者総合支援センター","0800-800-1944","https://support.chiba-agri.com/"],["東京都","関東","東京都農林水産振興財団 農業支援課","042-528-1357","https://www.tokyo-aff.or.jp/site/youth/1111.html"],["神奈川県","関東","かながわ農業アカデミー 就農企業参入課","046-238-5274","https://www.pref.kanagawa.jp/docs/k5g/cnt/f7220/index.html"],["新潟県","北陸・甲信越","新潟県農業経営・就農支援センター","025-282-5021","https://www.n-ikusei.jp/"],["富山県","北陸・甲信越","富山県農業会議","076-441-8961","https://www.tominou.com/"],["石川県","北陸・甲信越","いしかわ農業総合支援機構","076-225-7621","https://inz.or.jp/"],["福井県","北陸・甲信越","福井県農業経営・就農支援センター","0776-54-9312","https://www.pref.fukui.lg.jp/doc/021037/keiei/soudan.html"],["山梨県","北陸・甲信越","山梨県庁 担い手・農地対策課","055-223-1611","https://www.y-nk.jp/"],["長野県","北陸・甲信越","長野県農業担い手育成基金","026-235-7245","https://www.nagano-ninaite.or.jp/"],["岐阜県","東海","ぎふアグリチャレンジ支援センター","058-215-1550","https://www.gifu-notiku.com/"],["静岡県","東海","静岡県農業経営・就農支援センター","054-250-8989","https://www.shizuoka-nk.or.jp/"],["愛知県","東海","農起業支援ステーション","0564-51-1034","https://www.pref.aichi.jp/soshiki/noudai/aichi-nougyou.html"],["三重県","東海","三重県農林水産支援センター","0598-48-1228","https://nouchi-mie.jp/sien.html"],["滋賀県","近畿","しがの農業経営・就農支援センター","077-528-3845","https://www.pref.shiga.lg.jp/ippan/shigotosangyou/nougyou/ryutsuu/326459.html"],["京都府","近畿","京都府農業会議・府農政","075-417-6847","https://www.pref.kyoto.jp/nosei/index.html"],["大阪府","近畿","大阪農業つなぐセンター","06-6210-9596","https://osaka-midori.jp/nouen/"],["兵庫県","近畿","ひょうご就農支援センター","078-391-1222","https://www.hyogo-shunou.jp/reservation.html"],["奈良県","近畿","奈良県農業経営・就農支援センター","0742-27-7617","https://www.pref.nara.lg.jp/n120/61426.html"],["和歌山県","近畿","和歌山県庁 経営支援課","073-441-2932","https://www.pref.wakayama.lg.jp/prefg/070900/index.html"],["鳥取県","中国","鳥取県農業経営・就農支援センター","0857-26-7388","https://www.pref.tottori.lg.jp/311714.htm"],["島根県","中国","しまね農業振興公社","0852-22-6748","https://center.agri-shimane.or.jp/"],["岡山県","中国","岡山県農林漁業担い手育成財団","086-226-7423","https://ninaiteokayama.or.jp/interest/start.html"],["広島県","中国","広島県庁 農業経営課","082-513-3551","https://www.pref.hiroshima.lg.jp/soshiki/81/"],["山口県","中国","やまぐち農林振興公社","0835-28-7598","https://www.y-agreen.or.jp/farmers/"],["徳島県","四国","徳島県農業会議","088-678-5611","https://www.tokukaigi.or.jp/"],["香川県","四国","香川県農地機構・農業会議","087-816-3955","https://kagawa-nk.jp/"],["愛媛県","四国","えひめ農業経営サポートセンター","089-945-1542","https://enk.or.jp/"],["高知県","四国","高知県新規就農相談センター","088-824-8555","https://kochi-be-farmer.jp/"],["福岡県","九州・沖縄","福岡県農業振興推進機構","092-716-8355","https://www.f-ap.org/"],["佐賀県","九州・沖縄","佐賀県農業公社・就農支援","0952-25-7118","https://saga-agri.or.jp/"],["長崎県","九州・沖縄","長崎県農業会議","095-822-9647","https://agri-nagasaki.org/"],["熊本県","九州・沖縄","熊本県新規就農支援センター","096-333-2377","https://www.kuma-farm.jp/"],["大分県","九州・沖縄","大分県庁 企業参入・支援室","097-506-3780","https://www.pref.oita.jp/site/sannyu/"],["宮崎県","九州・沖縄","宮崎県新規就農相談センター","0985-32-4465","https://www.mnk.or.jp/sinki/"],["鹿児島県","九州・沖縄","かごしま農業経営・就農支援センター","099-286-3152","https://www.pref.kagoshima.jp/ag05/sangyo-rodo/nogyo/keiei/center.html"],["沖縄県","九州・沖縄","沖縄県農業振興公社","098-878-7020","https://www.onk.or.jp/"]];
+const areas = ["北海道・東北","関東","北陸・甲信越","東海","近畿","中国","四国","九州・沖縄"];
+const keyword = document.getElementById("keyword");
+const area = document.getElementById("area");
+const prefecture = document.getElementById("prefecture");
+const count = document.getElementById("result-count");
+const cards = document.getElementById("directory-cards");
+const empty = document.getElementById("no-results");
+for (const name of areas) area.add(new Option(name, name));
+for (const item of contacts) prefecture.add(new Option(item[0], item[0]));
+function cardFor(item) {
+  const article = document.createElement("article");
+  article.className = "directory-card";
+  const small = document.createElement("span");
+  small.className = "area";
+  small.textContent = item[1];
+  const title = document.createElement("h3");
+  title.textContent = item[0];
+  const office = document.createElement("p");
+  office.className = "office";
+  office.textContent = item[2];
+  const actions = document.createElement("div");
+  actions.className = "directory-actions";
+  const official = document.createElement("a");
+  official.className = "official";
+  official.href = item[4];
+  official.target = "_blank";
+  official.rel = "noopener noreferrer";
+  official.textContent = "公式窓口を見る ↗";
+  const phone = document.createElement("a");
+  phone.className = "phone";
+  phone.href = "tel:" + item[3];
+  phone.textContent = "☎ " + item[3];
+  phone.setAttribute("aria-label", item[0] + "の窓口に電話 " + item[3]);
+  actions.append(official, phone);
+  article.append(small, title, office, actions);
+  return article;
+}
+function render() {
+  const search = keyword.value.normalize("NFKC").trim().toLowerCase();
+  const matches = contacts.filter(item => {
+    return (!area.value || item[1] === area.value)
+      && (!prefecture.value || item[0] === prefecture.value)
+      && (!search || item.slice(0,3).join(" ").normalize("NFKC").toLowerCase().includes(search));
+  });
+  cards.replaceChildren(...matches.map(cardFor));
+  count.textContent = matches.length + "件の窓口を表示中（全47件）";
+  empty.hidden = matches.length > 0;
+}
+document.getElementById("reset").addEventListener("click", () => {
+  keyword.value = "";
+  area.value = "";
+  prefecture.value = "";
+  render();
+});
+for (const el of [keyword, area, prefecture]) el.addEventListener(el === keyword ? "input" : "change", render);
+const query = new URLSearchParams(location.search);
+const preselect = query.get("prefecture");
+if (contacts.some(item => item[0] === preselect)) prefecture.value = preselect;
+render();
+</script>
+</body>
+</html>
